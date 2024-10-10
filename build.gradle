@@ -1,19 +1,84 @@
 plugins {
     id 'java'
+    id "io.qameta.allure" version "2.11.2"
 }
 
 group = 'ru.iaygi'
 version = '1.0-SNAPSHOT'
+description = 'catalog-service'
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
     mavenCentral()
 }
 
+def allureVersion = "2.27.0"
+def aspectJVersion = "1.9.22"
+def restAssuredVersion = "5.4.0"
+def lombokVersion = "1.18.28"
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+configurations {
+    agent {
+        canBeResolved = true
+        canBeConsumed = true
+    }
+}
+
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    agent "org.aspectj:aspectjweaver:$aspectJVersion"
+    testImplementation(
+            platform("org.junit:junit-bom:5.10.0"),
+            platform("io.qameta.allure:allure-bom:$allureVersion"),
+            "io.qameta.allure:allure-junit5:$allureVersion",
+            "io.qameta.allure:allure-java-commons:$allureVersion",
+            "io.qameta.allure:allure-selenide:$allureVersion",
+            "io.qameta.allure:allure-rest-assured:$allureVersion",
+            "io.qameta.allure:allure-assertj:$allureVersion",
+            "org.junit.jupiter:junit-jupiter",
+            "io.rest-assured:rest-assured:$restAssuredVersion",
+            "io.rest-assured:json-path:$restAssuredVersion",
+            "io.rest-assured:xml-path:$restAssuredVersion",
+            "io.rest-assured:json-schema-validator:$restAssuredVersion",
+            "com.codeborne:selenide:7.2.3",
+            "org.assertj:assertj-core:3.26.0",
+            "com.fasterxml.jackson.module:jackson-module-scala_3:2.15.2",
+            "com.fasterxml.jackson.core:jackson-databind:2.17.0",
+            "com.github.javafaker:javafaker:1.0.2",
+            "org.apache.commons:commons-lang3:3.12.0",
+            "io.github.artsok:rerunner-jupiter:2.1.6",
+            "mysql:mysql-connector-java:8.0.33",
+            "org.postgresql:postgresql:42.7.3",
+            "com.browserup:browserup-proxy-core:2.1.2"
+    )
+    testImplementation("ru.yandex.qatools.ashot:ashot:1.5.4") {
+        exclude group: 'org.seleniumhq.selenium', module: 'selenium-remote-driver'
+    }
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+    testRuntimeOnly "org.slf4j:slf4j-simple:2.0.13"
+    compileOnly "org.projectlombok:lombok:1.18.28"
+    compileJava.options.encoding = "UTF-8"
+    compileTestJava.options.encoding = "UTF-8"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+    testCompileOnly "org.projectlombok:lombok:$lombokVersion"
+    testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
 }
 
 test {
     useJUnitPlatform()
+}
+
+tasks.withType(Test) {
+    systemProperties(System.getProperties())
+    useJUnitPlatform()
+
+    testLogging {
+        lifecycle {
+            events "started", "skipped", "failed", "standard_error", "standard_out"
+            exceptionFormat "short"
+        }
+    }
 }
