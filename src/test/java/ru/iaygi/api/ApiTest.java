@@ -21,8 +21,10 @@ public class ApiTest {
         given().
                 contentType(ContentType.JSON).
                 when().
+                log().all().
                 get(BASE_URL + "/api/users/2").
                 then().
+                log().all().
                 assertThat().statusCode(200).
                 body("data.id", equalTo(2)).
                 body("data.email", equalTo("janet.weaver@reqres.in")).
