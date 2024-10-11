@@ -1,4 +1,4 @@
-package ru.iaygi.api;
+package ru.iaygi.api.dasha;
 
 import io.restassured.http.ContentType;
 import jdk.jfr.Description;
