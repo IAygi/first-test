@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItems;
 
 public class ApiTest {
 
@@ -30,5 +31,25 @@ public class ApiTest {
                 body("data.email", equalTo("janet.weaver@reqres.in")).
                 body("data.first_name", equalTo("Janet")).
                 body("data.last_name", equalTo("Weaver"));
+    }
+
+    @Test
+    @Tag("smoke")
+    @DisplayName("Получение списка пользователей")
+    @Description("Проверить корректное получение списка пользователей")
+    void getUsers() {
+        given().
+                contentType(ContentType.JSON).
+                queryParam("page", 2).
+                when().
+                log().all().
+                get(BASE_URL + "/api/users").
+                then().
+                log().all().
+                assertThat().statusCode(200).
+                body("data.id", hasItems(7, 8, 9, 10, 11, 12)).
+                body("data.email", hasItems("michael.lawson@reqres.in", "lindsay.ferguson@reqres.in", "tobias.funke@reqres.in", "byron.fields@reqres.in", "george.edwards@reqres.in", "rachel.howell@reqres.in")).
+                body("data.first_name", hasItems("Michael", "Lindsay", "Tobias", "Byron", "George", "Rachel")).
+                body("data.last_name", hasItems("Lawson", "Ferguson", "Funke", "Fields", "Edwards", "Howell"));
     }
 }
