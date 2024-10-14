@@ -56,7 +56,8 @@ public class RestExecutorTest {
         });
 
         step("Проверка", () -> {
-            assertThat(responseUser.getName()).isEqualTo("ivan");
+            assertThat(responseUser.getName()).isEqualTo(name);
+            assertThat(responseUser.getJob()).isEqualTo(job);
         });
     }
 }

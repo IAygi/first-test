@@ -35,6 +35,5 @@ public class ApiTest {
                 body("data.year", equalTo(2001)).
                 body("data.color", equalTo("#C74375")).
                 body("data.pantone_value", equalTo("17-2031"));
-
     }
 }
