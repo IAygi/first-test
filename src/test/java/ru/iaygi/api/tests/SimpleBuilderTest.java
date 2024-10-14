@@ -67,3 +67,4 @@ public class SimpleBuilderTest {
         assertEquals(token, successReg.getToken());
     }
 }
+
