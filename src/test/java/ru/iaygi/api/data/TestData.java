@@ -1,10 +1,10 @@
 package ru.iaygi.api.data;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 public class TestData {
 
     private Integer id;

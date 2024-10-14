@@ -11,6 +11,7 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.groups.Tuple.tuple;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -40,8 +41,8 @@ public class SimpleBuilderTest {
                 .jsonPath()
                 .getList("data", TestData.class);
 
-        assertThat(data.get(0)).extracting("id", "email", "first_name", "last_name", "avatar")
-                .contains(id, email, first_name, last_name, avatar);
+        assertThat(data.toArray()).extracting("id", "email", "first_name", "last_name", "avatar")
+                .contains(tuple(id, email, first_name, last_name, avatar));
     }
 
     @Test

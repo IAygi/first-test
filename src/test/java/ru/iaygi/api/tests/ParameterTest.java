@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static io.qameta.allure.Allure.step;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ParameterTest {
 
@@ -35,7 +36,8 @@ public class ParameterTest {
     @Description("Проверить, что пользователь создаётся с валидным логином")
     void createUserWithValidLogin(String key, String value) {
         step("Проверка количества символов: " + key + " -> " + value, () -> {
-
+                assertThat(value.length()).isGreaterThanOrEqualTo(5);
+                assertThat(value.length()).isLessThanOrEqualTo(10);
         });
     }
 }

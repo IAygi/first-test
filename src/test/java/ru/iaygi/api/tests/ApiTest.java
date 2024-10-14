@@ -19,17 +19,24 @@ public class ApiTest {
     @DisplayName("Получение пользователя")
     @Description("Проверить корректное получение пользователя")
     void getUser() {
+        String name = "ivan";
+        String job = "tester";
+
+        var user = User.builder()
+                .name(name)
+                .job(job)
+                .build();
+
         given().
                 contentType(ContentType.JSON).
+                body(user).
                 when().
                 log().all().
-                get(BASE_URL + "/api/users/2").
+                post(BASE_URL + "/api/users").
                 then().
                 log().all().
-                assertThat().statusCode(200).
-                body("data.id", equalTo(2)).
-                body("data.email", equalTo("janet.weaver@reqres.in")).
-                body("data.first_name", equalTo("Janet")).
-                body("data.last_name", equalTo("Weaver"));
+                assertThat().statusCode(201).
+                body("name", equalTo(name)).
+                body("job", equalTo(job));
     }
 }
