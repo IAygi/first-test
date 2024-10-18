@@ -1,4 +1,4 @@
-package ru.iaygi.api.service;
+package ru.iaygi.api.specification;
 
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;

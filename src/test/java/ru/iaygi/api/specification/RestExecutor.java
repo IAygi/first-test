@@ -1,4 +1,4 @@
-package ru.iaygi.api.service;
+package ru.iaygi.api.specification;
 
 import io.qameta.allure.Step;
 import io.qameta.allure.restassured.AllureRestAssured;

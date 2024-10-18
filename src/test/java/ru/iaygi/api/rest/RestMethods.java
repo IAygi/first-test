@@ -1,31 +1,29 @@
 package ru.iaygi.api.rest;
 
-import io.qameta.allure.Step;
-import ru.iaygi.api.dto.User;
-import ru.iaygi.api.service.RestExecutor;
+import ru.iaygi.api.dto.RequestDto;
+import ru.iaygi.api.dto.ResponseDelDto;
+import ru.iaygi.api.specification.RestExecutor;
 
 import static io.restassured.http.ContentType.JSON;
 
 public class RestMethods {
 
-    private final static String BASE_URL = "https://reqres.in";
+    private final static String BASE_URL = "https://tatyana-aygi.ru";
 
-    @Step("Получить пользователя")
-    public RestExecutor getUser() {
+    public RestExecutor createUser(RequestDto body) {
         RestExecutor request = new RestExecutor(BASE_URL)
                 .contentType(JSON)
-                .pathParam("id", 2);
-        request.get("/api/users/{id}");
+                .body(body);
+        request.post("/test_api/add_user.php");
 
         return request;
     }
 
-    @Step("Получить пользователя")
-    public RestExecutor createUser(User body) {
+    public RestExecutor deleteUser(ResponseDelDto body) {
         RestExecutor request = new RestExecutor(BASE_URL)
                 .contentType(JSON)
                 .body(body);
-        request.post("/api/users");
+        request.delete("/test_api/delete_user.php");
 
         return request;
     }

@@ -1,4 +1,4 @@
-package ru.iaygi.api.service;
+package ru.iaygi.api.specification;
 
 public class Conditions {
 
