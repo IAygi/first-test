@@ -1,7 +1,7 @@
 package ru.iaygi.api.rest;
 
 import ru.iaygi.api.dto.RequestDto;
-import ru.iaygi.api.dto.ResponseDelDto;
+import ru.iaygi.api.dto.RequestDelDto;
 import ru.iaygi.api.specification.RestExecutor;
 
 import static io.restassured.http.ContentType.JSON;
@@ -19,7 +19,7 @@ public class RestMethods {
         return request;
     }
 
-    public RestExecutor deleteUser(ResponseDelDto body) {
+    public RestExecutor deleteUser(RequestDelDto body) {
         RestExecutor request = new RestExecutor(BASE_URL)
                 .contentType(JSON)
                 .body(body);

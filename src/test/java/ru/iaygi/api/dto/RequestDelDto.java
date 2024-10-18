@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ResponseDelDto {
+public class RequestDelDto {
 
 	private String login;
 }

@@ -1,7 +1,7 @@
 package ru.iaygi.api.service;
 
 import ru.iaygi.api.dto.RequestDto;
-import ru.iaygi.api.dto.ResponseDelDto;
+import ru.iaygi.api.dto.RequestDelDto;
 
 import static ru.iaygi.api.data.FakeData.*;
 
@@ -17,8 +17,8 @@ public class UserCreate {
                 .build();
     }
 
-    public ResponseDelDto responseDelDto(String login) {
-        return ResponseDelDto.builder()
+    public RequestDelDto responseDelDto(String login) {
+        return RequestDelDto.builder()
                 .login(login)
                 .build();
     }

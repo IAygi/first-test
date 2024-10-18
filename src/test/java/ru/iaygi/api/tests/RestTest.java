@@ -3,7 +3,7 @@ package ru.iaygi.api.tests;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.*;
 import ru.iaygi.api.dto.RequestDto;
-import ru.iaygi.api.dto.ResponseDelDto;
+import ru.iaygi.api.dto.RequestDelDto;
 import ru.iaygi.api.dto.ResponseUserDto;
 import ru.iaygi.api.rest.RestMethods;
 import ru.iaygi.api.service.UserCreate;
@@ -33,8 +33,8 @@ public class RestTest {
 
     @AfterEach
     public void clear() {
-        ResponseDelDto responseDelDto = userCreate.responseDelDto(request.getLogin());
-        restMethods.deleteUser(responseDelDto).shouldHave(statusCode(204));
+        RequestDelDto requestDelDto = userCreate.responseDelDto(request.getLogin());
+        restMethods.deleteUser(requestDelDto).shouldHave(statusCode(204));
     }
 
     @Test
