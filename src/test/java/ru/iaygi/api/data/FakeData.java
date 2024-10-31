@@ -45,3 +45,4 @@ public class FakeData {
         return result.replaceAll("[.^=\"':,]", "-");
     }
 }
+
