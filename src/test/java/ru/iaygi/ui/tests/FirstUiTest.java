@@ -1,12 +1,12 @@
-package ru.iaygi.ui;
+package ru.iaygi.ui.tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.logevents.SelenideLogger;
-import io.qameta.allure.selenide.AllureSelenide;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import ru.iaygi.ui.objects.PageObject;
 
 import java.time.Duration;
 
@@ -15,12 +15,15 @@ import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FirstUiTest {
+public class FirstUiTest extends TestBaseUi {
 
+    PageObject object = new PageObject();
+
+    @SneakyThrows
     @BeforeAll
     public static void init() {
         Configuration.holdBrowserOpen = true;
-        SelenideLogger.addListener("allure", new AllureSelenide());
+        Configuration.pageLoadStrategy = "none";
     }
 
     @Test
@@ -37,7 +40,7 @@ public class FirstUiTest {
     @Test
     @Tag("test_one")
     void gpnTest() {
-        step("ткрыть главную", () -> {
+        step("Открыть главную", () -> {
             open("https://www.gazprom-neft.ru/");
         });
 
@@ -55,5 +58,39 @@ public class FirstUiTest {
             assertEquals(txt, "Топливные карты «ОПТИ 24» для коммерческого транспорта",
                     "Текст не соответствует");
         });
+    }
+
+    @Test
+    void goToLink() {
+        open("https://ria.ru/");
+        $$(".footer__rubric-item").get(6).scrollTo().click();
+        $("h1 a").shouldHave(exactText("Наука"));
+    }
+
+    @Test
+    void formTesting() {
+        String login = "tomsmith";
+        String password = "SuperSecretPassword!";
+
+        step("Открыть страницу с формой", () -> {
+            open("https://the-internet.herokuapp.com/login");
+        });
+
+        step("Авторизаваться", () -> {
+            object.authUser(login, password);
+        });
+    }
+
+    @Test
+    void searchTest() {
+        open("https://www.bing.com/");
+        $("[name=\"q\"]").setValue("test").pressEnter();
+    }
+
+    @Test
+    void stopPageLoading() {
+        open("https://demoqa.com/login");
+        sleep(3_000);
+        executeJavaScript("window.stop();");
     }
 }
