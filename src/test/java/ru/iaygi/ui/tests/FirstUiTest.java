@@ -2,11 +2,12 @@ package ru.iaygi.ui.tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
-import lombok.SneakyThrows;
+import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import ru.iaygi.ui.objects.PageObject;
+import ru.iaygi.ui.service.TestBaseUi;
 
 import java.time.Duration;
 
@@ -19,9 +20,9 @@ public class FirstUiTest extends TestBaseUi {
 
     PageObject object = new PageObject();
 
-    @SneakyThrows
     @BeforeAll
-    public static void init() {
+    public static void init() throws Exception {
+//        initDriver();
         Configuration.holdBrowserOpen = true;
         Configuration.pageLoadStrategy = "none";
     }
@@ -92,5 +93,26 @@ public class FirstUiTest extends TestBaseUi {
         open("https://demoqa.com/login");
         sleep(3_000);
         executeJavaScript("window.stop();");
+    }
+
+    @Test
+    void switchToFrame() {
+        open("https://www.tiny.cloud/docs/tinymce/latest/snow-demo/");
+        switchTo().frame($("#premiumskinsandicons-snow_ifr"));
+        String text = $("#tinymce h1").getText();
+        System.out.println("============================ text = " + text);
+        switchTo().defaultContent();
+        String text2 = $(".doc h1").getText();
+        System.out.println("============================ text2 = " + text2);
+    }
+
+    @Test
+    void switchToTab() {
+        open("https://www.tiny.cloud/docs/tinymce/latest/snow-demo/");
+        $(".get-tinymce").click();
+        int count = WebDriverRunner.getWebDriver().getWindowHandles().size();
+        switchTo().window(count - 1);
+        String text = $(".e1jt04a61").getText();
+        System.out.println("============================ text = " + text);
     }
 }

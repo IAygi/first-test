@@ -1,4 +1,4 @@
-package ru.iaygi.ui.tests;
+package ru.iaygi.ui.service;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
@@ -26,7 +26,6 @@ public class TestBaseUi {
         SelenideLogger.addListener("allure", new AllureSelenide());
 
         ChromeOptions options = new ChromeOptions();
-        Configuration.baseUrl = "https://www.bing.com/";
         Configuration.browserSize = "1920x1080";
         Configuration.timeout = 8000;
 
